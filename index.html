@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Metro Finans – Din Trading Community</title>
+  <meta name="description" content="Sveriges snabbast växande investerarcommunity. Dagliga analyser av aktier, krypto och makro. Utan hype. Utan filter." />
+  <meta property="og:title" content="Metro Finans – Din Trading Community" />
+  <meta property="og:description" content="Förstå marknaden innan den rör sig. 14 000+ medlemmar." />
+
+  <!-- Favicon: gold M on dark -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='10' fill='%230a0a0f'/><text x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' font-family='Georgia,serif' font-size='34' font-weight='700' fill='%23d4af37'>M</text></svg>" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Lightweight Charts (TradingView OSS) -->
+  <script src="https://unpkg.com/lightweight-charts@4.1.3/dist/lightweight-charts.standalone.production.js"></script>
+
+  <style>
+    /* ─── TOKENS ─────────────────────────────────────────── */
+    :root {
+      --gold:       #d4af37;
+      --gold-lt:    #f0d565;
+      --gold-dim:   #7a6318;
+      --gold-faint: rgba(212,175,55,0.10);
+      --gold-glow:  rgba(212,175,55,0.05);
+
+      --bg:   #07070d;
+      --bg2:  #0d0d17;
+      --bg3:  #13131f;
+      --bg4:  #1a1a2a;
+      --bg5:  #20202e;
+
+      --text:   #f0ede8;
+      --muted:  #7a7888;
+      --subtle: #3a3848;
+
+      --green:    #22c55e;
+      --red:      #ef4444;
+      --green-bg: rgba(34,197,94,0.12);
+      --red-bg:   rgba(239,68,68,0.12);
+
+      --border:   rgba(212,175,55,0.10);
+      --border2:  rgba(212,175,55,0.25);
+      --border3:  rgba(255,255,255,0.06);
+
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+    }
+
+    /* ─── RESET ─────────────────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ─── NAV ────────────────────────────────────────────── */
+    #nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px;
+      height: 68px;
+      background: rgba(7,7,13,0.80);
+      backdrop-filter: blur(20px) saturate(1.4);
+      border-bottom: 0.5px solid var(--border);
+      transition: background 0.3s;
+    }
+
+    .nav-logo {
+      display: flex; align-items: center; gap: 11px;
+      font-family: 'Instrument Serif', serif;
+      font-size: 21px;
+      color: var(--gold);
+    }
+
+    .nav-logo-mark {
+      width: 36px; height: 36px;
+      background: var(--bg3);
+      border: 1px solid var(--border2);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 21px;
+      color: var(--gold);
+      font-family: 'Instrument Serif', serif;
+      flex-shrink: 0;
+    }
+
+    .nav-links {
+      display: flex; gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      background: var(--gold);
+      color: #07070d;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 9px 22px;
+      border-radius: var(--radius-sm);
+      transition: background 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+
+    .nav-cta:hover { background: var(--gold-lt); transform: translateY(-1px); }
+
+    /* ─── TICKER BAR ──────────────────────────────────────── */
+    #ticker-bar {
+      position: fixed; top: 68px; left: 0; right: 0; z-index: 190;
+      background: var(--bg2);
+      border-bottom: 0.5px solid var(--border);
+      height: 34px;
+      overflow: hidden;
+      display: flex; align-items: center;
+    }
+
+    #ticker-track {
+      display: flex; align-items: center; gap: 0;
+      white-space: nowrap;
+      animation: ticker-run 40s linear infinite;
+    }
+
+    #ticker-bar:hover #ticker-track { animation-play-state: paused; }
+
+    @keyframes ticker-run {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    .tick {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 0 28px;
+      font-size: 12px;
+      font-family: 'DM Mono', monospace;
+      border-right: 0.5px solid var(--border3);
+    }
+
+    .tick-sym { color: var(--text); font-weight: 500; letter-spacing: 0.03em; }
+    .tick-price { color: var(--muted); }
+    .tick-chg.up { color: var(--green); }
+    .tick-chg.dn { color: var(--red); }
+
+    /* ─── HERO ───────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      padding: 160px 24px 100px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-glow {
+      position: absolute;
+      top: 20%; left: 50%; transform: translateX(-50%);
+      width: 900px; height: 500px;
+      background: radial-gradient(ellipse at center, rgba(212,175,55,0.07) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 9px;
+      background: var(--bg3);
+      border: 0.5px solid var(--border2);
+      border-radius: 100px;
+      padding: 5px 16px;
+      font-size: 12px;
+      color: var(--gold);
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      margin-bottom: 30px;
+    }
+
+    .live-dot {
+      width: 6px; height: 6px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: blink 2.4s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.2; }
+    }
+
+    h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(46px, 8vw, 96px);
+      line-height: 1.02;
+      font-weight: 400;
+      max-width: 920px;
+      margin-bottom: 26px;
+      letter-spacing: -0.01em;
+    }
+
+    h1 em { font-style: italic; color: var(--gold); }
+
+    .hero-desc {
+      font-size: 18px;
+      font-weight: 300;
+      color: var(--muted);
+      max-width: 540px;
+      margin-bottom: 44px;
+      line-height: 1.7;
+    }
+
+    .hero-btns {
+      display: flex; gap: 14px; flex-wrap: wrap; justify-content: center;
+      margin-bottom: 64px;
+    }
+
+    .btn-gold {
+      background: var(--gold);
+      color: #07070d;
+      font-size: 15px; font-weight: 500;
+      padding: 14px 30px;
+      border-radius: var(--radius-sm);
+      transition: background 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+
+    .btn-gold:hover { background: var(--gold-lt); transform: translateY(-2px); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      font-size: 15px;
+      padding: 13px 30px;
+      border-radius: var(--radius-sm);
+      border: 0.5px solid rgba(240,237,232,0.18);
+      transition: border-color 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+
+    .btn-outline:hover { border-color: rgba(240,237,232,0.45); transform: translateY(-2px); }
+
+    .hero-stats {
+      display: flex; gap: 56px; flex-wrap: wrap; justify-content: center;
+    }
+
+    .stat-num {
+      font-family: 'Instrument Serif', serif;
+      font-size: 34px;
+      color: var(--gold);
+      display: block;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+    }
+
+    /* ─── SECTION COMMON ─────────────────────────────────── */
+    .section {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 96px 32px;
+    }
+
+    .section-eyebrow {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(30px, 4.5vw, 52px);
+      font-weight: 400;
+      margin-bottom: 14px;
+      line-height: 1.1;
+    }
+
+    .section-sub {
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--muted);
+      max-width: 500px;
+      line-height: 1.7;
+      margin-bottom: 52px;
+    }
+
+    /* ─── CHART SECTION ──────────────────────────────────── */
+    #chart-section { background: var(--bg); }
+
+    .chart-shell {
+      background: var(--bg2);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+    }
+
+    .chart-topbar {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      background: var(--bg3);
+      border-bottom: 0.5px solid var(--border);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .chart-tabs {
+      display: flex; gap: 4px;
+    }
+
+    .chart-tab {
+      background: transparent;
+      border: 0.5px solid transparent;
+      border-radius: var(--radius-sm);
+      color: var(--muted);
+      font-size: 13px;
+      font-family: 'DM Mono', monospace;
+      font-weight: 500;
+      padding: 6px 14px;
+      cursor: pointer;
+      transition: all 0.15s;
+      letter-spacing: 0.02em;
+    }
+
+    .chart-tab:hover  { color: var(--text); background: var(--bg4); }
+    .chart-tab.active { color: var(--gold); background: var(--gold-faint); border-color: var(--border2); }
+
+    .chart-tf-group {
+      display: flex; gap: 4px;
+    }
+
+    .tf-btn {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-size: 12px;
+      font-family: 'DM Mono', monospace;
+      padding: 5px 10px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .tf-btn:hover  { color: var(--text); background: var(--bg4); }
+    .tf-btn.active { color: var(--gold); background: var(--gold-faint); }
+
+    .chart-meta {
+      padding: 14px 24px 4px;
+      display: flex; align-items: flex-end; gap: 16px;
+    }
+
+    .chart-price-big {
+      font-family: 'Instrument Serif', serif;
+      font-size: 38px;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .chart-change-badge {
+      font-size: 13px;
+      font-family: 'DM Mono', monospace;
+      padding: 4px 10px;
+      border-radius: 100px;
+      margin-bottom: 6px;
+    }
+
+    .chart-change-badge.up { background: var(--green-bg); color: var(--green); }
+    .chart-change-badge.dn { background: var(--red-bg);   color: var(--red); }
+
+    .chart-sym-label {
+      font-size: 12px; color: var(--muted);
+      font-family: 'DM Mono', monospace;
+      margin-bottom: 6px;
+    }
+
+    #lw-chart {
+      width: 100%;
+      height: 340px;
+    }
+
+    .chart-footer {
+      padding: 12px 24px;
+      display: flex; align-items: center; gap: 8px;
+      border-top: 0.5px solid var(--border);
+    }
+
+    .lock-icon {
+      width: 14px; height: 14px;
+      stroke: var(--gold); fill: none; stroke-width: 2;
+      flex-shrink: 0;
+    }
+
+    .chart-footer p {
+      font-size: 12px; color: var(--muted);
+    }
+
+    .chart-footer a { color: var(--gold); }
+
+    /* ─── SIGNALS ────────────────────────────────────────── */
+    .signals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 14px;
+    }
+
+    .sig-card {
+      background: var(--bg2);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 22px 22px 18px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .sig-card:hover { border-color: var(--border2); }
+
+    .sig-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    }
+
+    .sig-card.bull::before { background: var(--green); }
+    .sig-card.bear::before { background: var(--red); }
+    .sig-card.neutral::before { background: var(--gold); }
+
+    .sig-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 16px;
+    }
+
+    .sig-sym  { font-weight: 500; font-size: 16px; }
+    .sig-name { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+    .sig-dir {
+      font-size: 11px;
+      font-family: 'DM Mono', monospace;
+      letter-spacing: 0.05em;
+      padding: 4px 10px;
+      border-radius: 100px;
+    }
+
+    .sig-dir.bull { background: var(--green-bg); color: var(--green); }
+    .sig-dir.bear { background: var(--red-bg);   color: var(--red); }
+    .sig-dir.neutral { background: var(--gold-faint); color: var(--gold); }
+
+    .sig-levels {
+      display: flex; flex-direction: column; gap: 8px;
+    }
+
+    .sig-row {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 13px;
+    }
+
+    .sig-lbl { color: var(--muted); font-size: 12px; }
+    .sig-val { font-family: 'DM Mono', monospace; font-weight: 500; }
+    .sig-val.up { color: var(--green); }
+    .sig-val.dn { color: var(--red); }
+    .sig-val.gold { color: var(--gold); }
+
+    .sig-lock {
+      position: absolute; inset: 0;
+      background: rgba(10,10,18,0.75);
+      backdrop-filter: blur(7px);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      border-radius: var(--radius-lg);
+      gap: 8px;
+    }
+
+    .sig-lock svg { stroke: var(--gold); fill: none; stroke-width: 1.8; width: 22px; height: 22px; }
+    .sig-lock span { font-size: 12px; color: var(--muted); }
+    .sig-lock a { font-size: 12px; color: var(--gold); margin-top: 2px; }
+
+    /* ─── FEATURES ───────────────────────────────────────── */
+    #why-section { background: var(--bg); }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1px;
+      background: var(--border3);
+      border: 0.5px solid var(--border3);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+    }
+
+    .feat {
+      background: var(--bg2);
+      padding: 36px 30px;
+    }
+
+    .feat-icon {
+      width: 42px; height: 42px;
+      background: var(--gold-faint);
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 22px;
+    }
+
+    .feat-icon svg { stroke: var(--gold); fill: none; stroke-width: 1.8; width: 20px; height: 20px; }
+
+    .feat h3 { font-size: 15px; font-weight: 500; margin-bottom: 10px; }
+    .feat p  { font-size: 14px; color: var(--muted); font-weight: 300; line-height: 1.65; }
+
+    /* ─── MEMBERSHIP ─────────────────────────────────────── */
+    #membership { background: var(--bg); }
+
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 18px;
+    }
+
+    .plan {
+      background: var(--bg2);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 34px;
+      display: flex; flex-direction: column;
+      position: relative; overflow: hidden;
+      transition: border-color 0.22s, transform 0.22s;
+    }
+
+    .plan:hover { transform: translateY(-5px); border-color: var(--border2); }
+
+    .plan.featured {
+      border-color: var(--gold-dim);
+      background: linear-gradient(140deg, rgba(212,175,55,0.06) 0%, var(--bg2) 55%);
+    }
+
+    .plan-badge {
+      position: absolute; top: 20px; right: 20px;
+      background: var(--gold);
+      color: #07070d;
+      font-size: 10px; font-weight: 500;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 100px;
+    }
+
+    .plan-name {
+      font-family: 'Instrument Serif', serif;
+      font-size: 24px;
+      font-weight: 400;
+      margin-bottom: 6px;
+    }
+
+    .plan-tagline {
+      font-size: 13px; font-weight: 300;
+      color: var(--muted);
+      margin-bottom: 26px;
+      line-height: 1.55;
+    }
+
+    .plan-price { margin-bottom: 28px; }
+
+    .price-num {
+      font-family: 'Instrument Serif', serif;
+      font-size: 44px;
+      color: var(--gold);
+      line-height: 1;
+      display: inline-block;
+    }
+
+    .price-cur { font-size: 18px; vertical-align: top; margin-top: 8px; display: inline-block; color: var(--gold); opacity: 0.7; }
+    .price-mo  { font-size: 13px; color: var(--muted); margin-left: 2px; }
+
+    .plan-perks {
+      list-style: none;
+      flex: 1;
+      margin-bottom: 30px;
+      display: flex; flex-direction: column; gap: 0;
+    }
+
+    .plan-perks li {
+      font-size: 14px; font-weight: 300;
+      color: var(--muted);
+      padding: 9px 0;
+      border-bottom: 0.5px solid var(--border3);
+      display: flex; align-items: flex-start; gap: 10px;
+      line-height: 1.4;
+    }
+
+    .plan-perks li:last-child { border-bottom: none; }
+
+    .plan-perks li svg {
+      flex-shrink: 0; margin-top: 1px;
+      stroke: var(--green); fill: none; stroke-width: 2;
+      width: 15px; height: 15px;
+    }
+
+    .plan-btn {
+      display: block; text-align: center;
+      padding: 13px;
+      border-radius: var(--radius-sm);
+      font-size: 14px; font-weight: 500;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .plan-btn.gold { background: var(--gold); color: #07070d; }
+    .plan-btn.gold:hover { background: var(--gold-lt); transform: translateY(-1px); }
+    .plan-btn.ghost { border: 0.5px solid var(--border2); color: var(--text); }
+    .plan-btn.ghost:hover { background: var(--bg4); transform: translateY(-1px); }
+
+    .plans-note {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 12px; color: var(--muted);
+    }
+
+    /* ─── QUOTE BAND ─────────────────────────────────────── */
+    #quote-band {
+      background: var(--bg2);
+      border-top: 0.5px solid var(--border);
+      border-bottom: 0.5px solid var(--border);
+      padding: 80px 32px;
+      text-align: center;
+    }
+
+    .quote-text {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-size: clamp(22px, 3.5vw, 38px);
+      max-width: 860px;
+      margin: 0 auto 24px;
+      line-height: 1.28;
+      color: var(--text);
+    }
+
+    .quote-attr { font-size: 13px; color: var(--muted); letter-spacing: 0.04em; }
+
+    /* ─── FOOTER ──────────────────────────────────────────── */
+    #footer {
+      padding: 52px 32px;
+      text-align: center;
+      border-top: 0.5px solid var(--border);
+    }
+
+    .footer-logo {
+      display: flex; align-items: center; justify-content: center; gap: 11px;
+      font-family: 'Instrument Serif', serif;
+      font-size: 22px;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+
+    .footer-links {
+      display: flex; gap: 28px; justify-content: center; flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .footer-links a {
+      font-size: 13px; color: var(--muted);
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--gold); }
+
+    .footer-disclaimer {
+      font-size: 11px; color: var(--muted);
+      max-width: 640px; margin: 0 auto 20px;
+      line-height: 1.7; opacity: 0.65;
+    }
+
+    .footer-copy { font-size: 11px; color: var(--subtle); }
+
+    /* ─── MOBILE ─────────────────────────────────────────── */
+    @media (max-width: 700px) {
+      #nav { padding: 0 18px; }
+      .nav-links { display: none; }
+      .section { padding: 64px 20px; }
+      .hero-stats { gap: 28px; }
+      #hero { padding: 140px 20px 80px; }
+    }
+
+    /* ─── SCROLL REVEAL ──────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════ NAV ════════════════════ -->
+  <nav id="nav">
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-mark">M</div>
+      Metro Finans
+    </a>
+    <ul class="nav-links">
+      <li><a href="#chart-section">Marknaden</a></li>
+      <li><a href="#why-section">Om oss</a></li>
+      <li><a href="#membership">Medlemskap</a></li>
+    </ul>
+    <a href="https://patreon.com/u81441044?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_fan&utm_content=copyLink"
+       target="_blank" rel="noopener" class="nav-cta">Bli Medlem</a>
+  </nav>
+
+  <!-- ═══════════════════ TICKER BAR ════════════════════ -->
+  <div id="ticker-bar">
+    <div id="ticker-track"></div>
+  </div>
+
+  <!-- ═══════════════════ HERO ════════════════════ -->
+  <section id="hero">
+    <div class="hero-glow"></div>
+
+    <div class="eyebrow">
+      <div class="live-dot"></div>
+      Sveriges snabbast växande investerarcommunity
+    </div>
+
+    <h1>Förstå marknaden <em>innan</em><br>den rör sig</h1>
+
+    <p class="hero-desc">
+      Dagliga analyser av aktier, krypto och makro. Konkreta nivåer, tydliga scenarios — utan hype, utan filter.
+    </p>
+
+    <div class="hero-btns">
+      <a href="https://patreon.com/u81441044?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_fan&utm_content=copyLink"
+         target="_blank" rel="noopener" class="btn-gold">Gå med nu →</a>
+      <a href="#membership" class="btn-outline">Se alla planer</a>
+    </div>
+
+    <div class="hero-stats">
+      <div>
+        <span class="stat-num">14 000+</span>
+        <span class="stat-label">Medlemmar</span>
+      </div>
+      <div>
+        <span class="stat-num">Dagligen</span>
+        <span class="stat-label">Nya analyser</span>
+      </div>
+      <div>
+        <span class="stat-num">0 kr</span>
+        <span class="stat-label">Bindningstid</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ LIVE CHART ════════════════════ -->
+  <section id="chart-section">
+    <div class="section reveal">
+      <p class="section-eyebrow">Live marknadsdata</p>
+      <h2 class="section-title">Realtidsöversikt</h2>
+      <p class="section-sub">Följ marknaden i realtid. Välj aktie och tidsram nedan.</p>
+
+      <div class="chart-shell">
+        <!-- top bar: symbol tabs + timeframe -->
+        <div class="chart-topbar">
+          <div class="chart-tabs" id="chart-tabs">
+            <button class="chart-tab active" data-sym="TSLA">TSLA</button>
+            <button class="chart-tab" data-sym="NVDA">NVDA</button>
+            <button class="chart-tab" data-sym="AMZN">AMZN</button>
+            <button class="chart-tab" data-sym="AAPL">AAPL</button>
+            <button class="chart-tab" data-sym="BTC">BTC</button>
+            <button class="chart-tab" data-sym="MSTR">MSTR</button>
+          </div>
+          <div class="chart-tf-group" id="chart-tf">
+            <button class="tf-btn" data-tf="1D">1D</button>
+            <button class="tf-btn active" data-tf="1W">1V</button>
+            <button class="tf-btn" data-tf="1M">1M</button>
+            <button class="tf-btn" data-tf="3M">3M</button>
+          </div>
+        </div>
+
+        <!-- price readout -->
+        <div class="chart-meta">
+          <span class="chart-price-big" id="chart-price">—</span>
+          <span class="chart-change-badge up" id="chart-badge">—</span>
+          <span class="chart-sym-label" id="chart-sym-label">TSLA • Nasdaq</span>
+        </div>
+
+        <!-- Lightweight Charts container -->
+        <div id="lw-chart"></div>
+
+        <div class="chart-footer">
+          <svg class="lock-icon" viewBox="0 0 24 24">
+            <rect x="3" y="11" width="18" height="11" rx="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+          <p>Fullständiga handelsupplägg och portföljtransaktioner är exklusivt för
+            <a href="https://patreon.com/u81441044?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_fan&utm_content=copyLink"
+               target="_blank" rel="noopener">Patreon-medlemmar →</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ SIGNALS PREVIEW ════════════════════ -->
+  <section id="signals-section">
+    <div class="section reveal">
+      <p class="section-eyebrow">Dagliga signaler</p>
+      <h2 class="section-title">Handelsupplägg — smakprov</h2>
+      <p class="section-sub">Varje handelsdag publiceras konkreta bull/bear-scenarios med tydliga nivåer.</p>
+
+      <div class="signals-grid">
+
+        <!-- Signal 1 — unlocked preview -->
+        <div class="sig-card bull">
+          <div class="sig-header">
+            <div>
+              <div class="sig-sym">TSLA</div>
+              <div class="sig-name">Tesla Inc.</div>
+            </div>
+            <span class="sig-dir bull">▲ BULL</span>
+          </div>
+          <div class="sig-levels">
+            <div class="sig-row"><span class="sig-lbl">Entry</span>    <span class="sig-val up">$389.00</span></div>
+            <div class="sig-row"><span class="sig-lbl">Mål 1</span>   <span class="sig-val">$395.00</span></div>
+            <div class="sig-row"><span class="sig-lbl">Mål 2</span>   <span class="sig-val">$402.50</span></div>
+            <div class="sig-row"><span class="sig-lbl">Stop loss</span><span class="sig-val dn">$381.00</span></div>
+          </div>
+        </div>
+
+        <!-- Signal 2 — bear -->
+        <div class="sig-card bear">
+          <div class="sig-header">
+            <div>
+              <div class="sig-sym">NVDA</div>
+              <div class="sig-name">Nvidia Corp.</div>
+            </div>
+            <span class="sig-dir bear">▼ BEAR</span>
+          </div>
+          <div class="sig-levels">
+            <div class="sig-row"><span class="sig-lbl">Entry</span>    <span class="sig-val dn">$127.40</span></div>
+            <div class="sig-row"><span class="sig-lbl">Mål 1</span>   <span class="sig-val">$123.80</span></div>
+            <div class="sig-row"><span class="sig-lbl">Mål 2</span>   <span class="sig-val">$119.00</span></div>
+            <div class="sig-row"><span class="sig-lbl">Stop loss</span><span class="sig-val up">$131.50</span></div>
+          </div>
+        </div>
+
+        <!-- Signal 3 — locked -->
+        <div class="sig-card neutral">
+          <div class="sig-header">
+            <div>
+              <div class="sig-sym">AMZN</div>
+              <div class="sig-name">Amazon.com Inc.</div>
+            </div>
+            <span class="sig-dir neutral">◆ FULL</span>
+          </div>
+          <div class="sig-levels">
+            <div class="sig-row"><span class="sig-lbl">Entry</span>    <span class="sig-val gold">$224.00</span></div>
+            <div class="sig-row"><span class="sig-lbl">Mål 1</span>   <span class="sig-val">$227.00</span></div>
+            <div class="sig-row"><span class="sig-lbl">Mål 2</span>   <span class="sig-val">$231.20</span></div>
+            <div class="sig-row"><span class="sig-lbl">Stop loss</span><span class="sig-val dn">$218.20</span></div>
+          </div>
+          <div class="sig-lock">
+            <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <span>Låst för icke-medlemmar</span>
+            <a href="https://patreon.com/u81441044?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_fan&utm_content=copyLink"
+               target="_blank" rel="noopener">Gå med för att se →</a>
+          </div>
+        </div>
+
+        <!-- Signal 4 — locked -->
+        <div class="sig-card bull">
+          <div class="sig-header">
+            <div>
+              <div class="sig-sym">BTC</div>
+              <div class="sig-name">Bitcoin</div>
+            </div>
+            <span class="sig-dir bull">▲ BULL</span>
+          </div>
+          <div class="sig-levels">
+            <div class="sig-row"><span class="sig-lbl">Entry</span>    <span class="sig-val up">$67 200</span></div>
+            <div class="sig-row"><span class="sig-lbl">Mål 1</span>   <span class="sig-val">$70 500</span></div>
+            <div class="sig-row"><span class="sig-lbl">Mål 2</span>   <span class="sig-val">$74 800</span></div>
+            <div class="sig-row"><span class="sig-lbl">Stop loss</span><span class="sig-val dn">$63 400</span></div>
+          </div>
+          <div class="sig-lock">
+            <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <span>Låst för icke-medlemmar</span>
+            <a href="https://patreon.com/u81441044?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_fan&utm_content=copyLink"
+               target="_blank" rel="noopener">Gå med för att se →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ WHY ════════════════════ -->
+  <section id="why-section">
+    <div class="section reveal">
+      <p class="section-eyebrow">Varför Metro Finans</p>
+      <h2 class="section-title">Insikt. Sammanhang. Praktisk nytta.</h2>
+      <p class="section-sub">Inte efterklokhet. Inte show. Inte löften om 300% på en månad.</p>
+
+      <div class="features-grid">
+        <div class="feat">
+          <div class="feat-icon">
+            <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <h3>Dagliga marknadsbrev</h3>
+          <p>Analyser av aktier, krypto och makro varje handelsdag med konkreta nivåer och tydlig kontext.</p>
+        </div>
+        <div class="feat">
+          <div class="feat-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          </div>
+          <h3>Teknik + fundamental analys</h3>
+          <p>Vi kopplar räntor, inflation, geopolitik och sentiment direkt till konkreta handelsbeslut.</p>
+        </div>
+        <div class="feat">
+          <div class="feat-icon">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3>Strukturerad community</h3>
+          <p>Ingen pump &amp; dump. Börspsykologi på riktigt — flockbeteende och hur småsparare ofta blir spelade.</p>
+        </div>
+        <div class="feat">
+          <div class="feat-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>Anonym. Kompromisslös.</h3>
+          <p>Analysen och metoden i centrum — inte personen bakom. Innehållet räknas, inte ansiktet.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ MEMBERSHIP ════════════════════ -->
+  <section id="membership">
+    <div class="section reveal">
+      <p class="section-eyebrow">Patreon-planer</p>
+      <h2 class="section-title">Välj din nivå</h2>
+      <p class="section-sub">Ingen bindningstid. Avsluta när du vill. Betalning via Patreon.</p>
+
+      <div class="plans-grid">
+
+        <!-- Standard -->
+        <div class="plan">
+          <div class="plan-name">Standard</div>
+          <p class="plan-tagline">Veckoanlyser och marknadsöversikter för dig som vill förstå utan att lägga timmar själv.</p>
+          <div class="plan-price">
+            <span class="price-cur">$</span><span class="price-num">24</span><span class="price-mo">/mån</span>
+          </div>
+          <ul class="plan-perks">
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Veckovisa marknadsanalyser</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Senaste trender aktier &amp; krypto</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Djupanalyser av utvalda aktier</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Exklusiv kanalåtkomst</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Ingen bindningstid</li>
+          </ul>
+          <a href="https://patreon.com/u81441044?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_fan&utm_content=copyLink"
+             target="_blank" rel="noopener" class="plan-btn ghost">Gå med nu</a>
+        </div>
+
+        <!-- Premium -->
+        <div class="plan featured">
+          <div class="plan-badge">Populärast</div>
+          <div class="plan-name">Premium</div>
+          <p class="plan-tagline">Dagliga handelsupplägg och konkreta bull/bear-nivåer för aktiva traders.</p>
+          <div class="plan-price">
+            <span class="price-cur">$</span><span class="price-num">49</span><span class="price-mo">/mån</span>
+          </div>
+          <ul class="plan-perks">
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Allt i Standard</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Dagliga handelsupplägg &amp; signaler</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Konkreta bull/bear-nivåer varje dag</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Makroöversikt: räntor, inflation, geopolitik</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Börspsykologi &amp; flockbeteende</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Portföljuppdateringar &amp; köplistor</li>
+          </ul>
+          <a href="https://patreon.com/u81441044?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_fan&utm_content=copyLink"
+             target="_blank" rel="noopener" class="plan-btn gold">Gå med nu →</a>
+        </div>
+
+        <!-- Elite -->
+        <div class="plan">
+          <div class="plan-name">Elite</div>
+          <p class="plan-tagline">Fullständigt paket med portföljtransaktioner, kryptoanalyser och prioriterad åtkomst.</p>
+          <div class="plan-price">
+            <span class="price-cur">$</span><span class="price-num">99</span><span class="price-mo">/mån</span>
+          </div>
+          <ul class="plan-perks">
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Allt i Premium</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Fullständiga portföljtransaktioner</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Detaljerade köp- &amp; säljstrategier</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Krypto &amp; MSTR specialanalyser</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Prioriterad communityåtkomst</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Exklusivt nyhetsbrev</li>
+          </ul>
+          <a href="https://patreon.com/u81441044?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_fan&utm_content=copyLink"
+             target="_blank" rel="noopener" class="plan-btn ghost">Gå med nu</a>
+        </div>
+
+      </div>
+
+      <p class="plans-note">Alla planer hanteras via Patreon · Säker betalning · Avsluta när som helst</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ QUOTE ════════════════════ -->
+  <div id="quote-band">
+    <p class="quote-text">
+      "Det handlar inte om att köpa vad någon annan köper —<br>
+      det handlar om att förstå <em>varför</em> marknaden rör sig, innan den rör sig."
+    </p>
+    <p class="quote-attr">— Metro Finans · Insikter och strategier inom ekonomi, aktier och krypto</p>
+  </div>
+
+  <!-- ═══════════════════ FOOTER ════════════════════ -->
+  <footer id="footer">
+    <div class="footer-logo">
+      <div class="nav-logo-mark">M</div>
+      Metro Finans
+    </div>
+    <div class="footer-links">
+      <a href="https://finansmetro.se/" target="_blank" rel="noopener">Hemsida</a>
+      <a href="https://patreon.com/u81441044?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_fan&utm_content=copyLink" target="_blank" rel="noopener">Patreon</a>
+      <a href="#chart-section">Marknaden</a>
+      <a href="#membership">Medlemskap</a>
+    </div>
+    <p class="footer-disclaimer">
+      Allt innehåll på denna sida är utbildningssyfte och utgör inte finansiell rådgivning eller investeringsrekommendationer.
+      Handel med aktier och kryptovalutor innebär risk och du kan förlora hela ditt insatta kapital.
+      Historisk avkastning är ingen garanti för framtida resultat.
+    </p>
+    <p class="footer-copy">© 2025 Metro Finans. Alla rättigheter förbehållna.</p>
+  </footer>
+
+  <!-- JS -->
+  <script src="main.js"></script>
+
+</body>
+</html>
