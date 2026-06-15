@@ -15,9 +15,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
-  <!-- Lightweight Charts (TradingView OSS) -->
-  <script src="https://unpkg.com/lightweight-charts@4.1.3/dist/lightweight-charts.standalone.production.js"></script>
-
   <style>
     /* ─── TOKENS ─────────────────────────────────────────── */
     :root {
@@ -86,16 +83,15 @@
       color: var(--gold);
     }
 
-    .nav-logo-mark {
+    /* Karaktärs-avatar inspirerad av logotypen i image_67a0a3.png och ångrar sålde xrp (9).png */
+    .nav-avatar {
       width: 36px; height: 36px;
-      background: var(--bg3);
-      border: 1px solid var(--border2);
-      border-radius: 8px;
+      background: #111;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      font-size: 21px;
-      color: var(--gold);
-      font-family: 'Instrument Serif', serif;
-      flex-shrink: 0;
+      overflow: hidden;
+      font-size: 20px;
     }
 
     .nav-links {
@@ -162,8 +158,8 @@
 
     /* ─── HERO ───────────────────────────────────────────── */
     #hero {
-      min-height: 100vh;
-      padding: 160px 24px 100px;
+      min-height: 90vh;
+      padding: 160px 24px 80px;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       text-align: center;
@@ -189,7 +185,7 @@
       color: var(--gold);
       letter-spacing: 0.07em;
       text-transform: uppercase;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
     }
 
     .live-dot {
@@ -202,6 +198,16 @@
     @keyframes blink {
       0%, 100% { opacity: 1; }
       50%       { opacity: 0.2; }
+    }
+
+    /* Slogan från bilden image_67a0a3.png */
+    .sub-eyebrow {
+      font-size: 13px;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 25px;
+      font-weight: 500;
     }
 
     h1 {
@@ -279,7 +285,7 @@
     .section {
       max-width: 1160px;
       margin: 0 auto;
-      padding: 96px 32px;
+      padding: 80px 32px;
     }
 
     .section-eyebrow {
@@ -307,118 +313,6 @@
       margin-bottom: 52px;
     }
 
-    /* ─── CHART SECTION ──────────────────────────────────── */
-    #chart-section { background: var(--bg); }
-
-    .chart-shell {
-      background: var(--bg2);
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius-xl);
-      overflow: hidden;
-    }
-
-    .chart-topbar {
-      display: flex; align-items: center;
-      justify-content: space-between;
-      padding: 16px 24px;
-      background: var(--bg3);
-      border-bottom: 0.5px solid var(--border);
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .chart-tabs {
-      display: flex; gap: 4px;
-    }
-
-    .chart-tab {
-      background: transparent;
-      border: 0.5px solid transparent;
-      border-radius: var(--radius-sm);
-      color: var(--muted);
-      font-size: 13px;
-      font-family: 'DM Mono', monospace;
-      font-weight: 500;
-      padding: 6px 14px;
-      cursor: pointer;
-      transition: all 0.15s;
-      letter-spacing: 0.02em;
-    }
-
-    .chart-tab:hover  { color: var(--text); background: var(--bg4); }
-    .chart-tab.active { color: var(--gold); background: var(--gold-faint); border-color: var(--border2); }
-
-    .chart-tf-group {
-      display: flex; gap: 4px;
-    }
-
-    .tf-btn {
-      background: transparent;
-      border: none;
-      color: var(--muted);
-      font-size: 12px;
-      font-family: 'DM Mono', monospace;
-      padding: 5px 10px;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-
-    .tf-btn:hover  { color: var(--text); background: var(--bg4); }
-    .tf-btn.active { color: var(--gold); background: var(--gold-faint); }
-
-    .chart-meta {
-      padding: 14px 24px 4px;
-      display: flex; align-items: flex-end; gap: 16px;
-    }
-
-    .chart-price-big {
-      font-family: 'Instrument Serif', serif;
-      font-size: 38px;
-      color: var(--text);
-      line-height: 1;
-    }
-
-    .chart-change-badge {
-      font-size: 13px;
-      font-family: 'DM Mono', monospace;
-      padding: 4px 10px;
-      border-radius: 100px;
-      margin-bottom: 6px;
-    }
-
-    .chart-change-badge.up { background: var(--green-bg); color: var(--green); }
-    .chart-change-badge.dn { background: var(--red-bg);   color: var(--red); }
-
-    .chart-sym-label {
-      font-size: 12px; color: var(--muted);
-      font-family: 'DM Mono', monospace;
-      margin-bottom: 6px;
-    }
-
-    #lw-chart {
-      width: 100%;
-      height: 340px;
-    }
-
-    .chart-footer {
-      padding: 12px 24px;
-      display: flex; align-items: center; gap: 8px;
-      border-top: 0.5px solid var(--border);
-    }
-
-    .lock-icon {
-      width: 14px; height: 14px;
-      stroke: var(--gold); fill: none; stroke-width: 2;
-      flex-shrink: 0;
-    }
-
-    .chart-footer p {
-      font-size: 12px; color: var(--muted);
-    }
-
-    .chart-footer a { color: var(--gold); }
-
     /* ─── SIGNALS ────────────────────────────────────────── */
     .signals-grid {
       display: grid;
@@ -445,7 +339,6 @@
 
     .sig-card.bull::before { background: var(--green); }
     .sig-card.bear::before { background: var(--red); }
-    .sig-card.neutral::before { background: var(--gold); }
 
     .sig-header {
       display: flex; justify-content: space-between; align-items: flex-start;
@@ -465,10 +358,11 @@
 
     .sig-dir.bull { background: var(--green-bg); color: var(--green); }
     .sig-dir.bear { background: var(--red-bg);   color: var(--red); }
-    .sig-dir.neutral { background: var(--gold-faint); color: var(--gold); }
 
     .sig-levels {
       display: flex; flex-direction: column; gap: 8px;
+      filter: blur(4px); /* Samtliga mål låsta visuellt */
+      user-select: none;
     }
 
     .sig-row {
@@ -480,21 +374,22 @@
     .sig-val { font-family: 'DM Mono', monospace; font-weight: 500; }
     .sig-val.up { color: var(--green); }
     .sig-val.dn { color: var(--red); }
-    .sig-val.gold { color: var(--gold); }
 
     .sig-lock {
       position: absolute; inset: 0;
-      background: rgba(10,10,18,0.75);
-      backdrop-filter: blur(7px);
+      background: rgba(7,7,13,0.85);
+      backdrop-filter: blur(2px);
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       border-radius: var(--radius-lg);
       gap: 8px;
+      padding: 0 10px;
+      text-align: center;
     }
 
     .sig-lock svg { stroke: var(--gold); fill: none; stroke-width: 1.8; width: 22px; height: 22px; }
-    .sig-lock span { font-size: 12px; color: var(--muted); }
-    .sig-lock a { font-size: 12px; color: var(--gold); margin-top: 2px; }
+    .sig-lock span { font-size: 12px; color: var(--text); font-weight: 500; }
+    .sig-lock a { font-size: 11px; color: var(--gold); margin-top: 2px; text-decoration: underline; }
 
     /* ─── FEATURES ───────────────────────────────────────── */
     #why-section { background: var(--bg); }
@@ -668,6 +563,25 @@
       margin-bottom: 20px;
     }
 
+    /* Integrering av begärda sociala medie-länkar */
+    .footer-socials {
+      display: flex; gap: 20px; justify-content: center; margin-bottom: 24px;
+    }
+
+    .footer-socials a {
+      font-size: 12px;
+      color: var(--gold);
+      border: 1px solid var(--border2);
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .footer-socials a:hover {
+      background: var(--gold-faint);
+      color: var(--gold-lt);
+    }
+
     .footer-links {
       display: flex; gap: 28px; justify-content: center; flex-wrap: wrap;
       margin-bottom: 28px;
@@ -715,11 +629,12 @@
   <!-- ═══════════════════ NAV ════════════════════ -->
   <nav id="nav">
     <a href="#" class="nav-logo">
-      <div class="nav-logo-mark">M</div>
+      <!-- Rånarluva/Kring-ikon som representerar karaktären -->
+      <div class="nav-avatar">🥷</div>
       Metro Finans
     </a>
     <ul class="nav-links">
-      <li><a href="#chart-section">Marknaden</a></li>
+      <li><a href="#signals-section">Signaler</a></li>
       <li><a href="#why-section">Om oss</a></li>
       <li><a href="#membership">Medlemskap</a></li>
     </ul>
@@ -740,6 +655,9 @@
       <div class="live-dot"></div>
       Sveriges snabbast växande investerarcommunity
     </div>
+
+    <!-- Slogan adderad från din profilbild -->
+    <div class="sub-eyebrow">När andra är rädda är vi förberedda</div>
 
     <h1>Förstå marknaden <em>innan</em><br>den rör sig</h1>
 
@@ -769,66 +687,17 @@
     </div>
   </section>
 
-  <!-- ═══════════════════ LIVE CHART ════════════════════ -->
-  <section id="chart-section">
-    <div class="section reveal">
-      <p class="section-eyebrow">Live marknadsdata</p>
-      <h2 class="section-title">Realtidsöversikt</h2>
-      <p class="section-sub">Följ marknaden i realtid. Välj aktie och tidsram nedan.</p>
-
-      <div class="chart-shell">
-        <!-- top bar: symbol tabs + timeframe -->
-        <div class="chart-topbar">
-          <div class="chart-tabs" id="chart-tabs">
-            <button class="chart-tab active" data-sym="TSLA">TSLA</button>
-            <button class="chart-tab" data-sym="NVDA">NVDA</button>
-            <button class="chart-tab" data-sym="AMZN">AMZN</button>
-            <button class="chart-tab" data-sym="AAPL">AAPL</button>
-            <button class="chart-tab" data-sym="BTC">BTC</button>
-            <button class="chart-tab" data-sym="MSTR">MSTR</button>
-          </div>
-          <div class="chart-tf-group" id="chart-tf">
-            <button class="tf-btn" data-tf="1D">1D</button>
-            <button class="tf-btn active" data-tf="1W">1V</button>
-            <button class="tf-btn" data-tf="1M">1M</button>
-            <button class="tf-btn" data-tf="3M">3M</button>
-          </div>
-        </div>
-
-        <!-- price readout -->
-        <div class="chart-meta">
-          <span class="chart-price-big" id="chart-price">—</span>
-          <span class="chart-change-badge up" id="chart-badge">—</span>
-          <span class="chart-sym-label" id="chart-sym-label">TSLA • Nasdaq</span>
-        </div>
-
-        <!-- Lightweight Charts container -->
-        <div id="lw-chart"></div>
-
-        <div class="chart-footer">
-          <svg class="lock-icon" viewBox="0 0 24 24">
-            <rect x="3" y="11" width="18" height="11" rx="2"/>
-            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-          </svg>
-          <p>Fullständiga handelsupplägg och portföljtransaktioner är exklusivt för
-            <a href="https://patreon.com/u81441044?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_fan&utm_content=copyLink"
-               target="_blank" rel="noopener">Patreon-medlemmar →</a>
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════ SIGNALS PREVIEW ════════════════════ -->
+  <!-- ═══════════════════ SIGNALS (ÄNDRAD RUBRIK) ════════════════════ -->
   <section id="signals-section">
     <div class="section reveal">
-      <p class="section-eyebrow">Dagliga signaler</p>
-      <h2 class="section-title">Handelsupplägg — smakprov</h2>
-      <p class="section-sub">Varje handelsdag publiceras konkreta bull/bear-scenarios med tydliga nivåer.</p>
+      <p class="section-eyebrow">Exklusiva handelsupplägg</p>
+      <!-- Ändrad rubrik enligt önskemål -->
+      <h2 class="section-title">Signaler - Dagens SCALP SETUPS</h2>
+      <p class="section-sub">Varje handelsdag publiceras konkreta bull/bear-scenarios med exakta och strategiska nivåer.</p>
 
       <div class="signals-grid">
 
-        <!-- Signal 1 — unlocked preview -->
+        <!-- Signal 1 — LÅST -->
         <div class="sig-card bull">
           <div class="sig-header">
             <div>
@@ -843,9 +712,15 @@
             <div class="sig-row"><span class="sig-lbl">Mål 2</span>   <span class="sig-val">$402.50</span></div>
             <div class="sig-row"><span class="sig-lbl">Stop loss</span><span class="sig-val dn">$381.00</span></div>
           </div>
+          <div class="sig-lock">
+            <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <span>Låst för icke-medlemmar</span>
+            <a href="https://patreon.com/u81441044?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_fan&utm_content=copyLink"
+               target="_blank" rel="noopener">Lås upp med Premium →</a>
+          </div>
         </div>
 
-        <!-- Signal 2 — bear -->
+        <!-- Signal 2 — LÅST -->
         <div class="sig-card bear">
           <div class="sig-header">
             <div>
@@ -860,32 +735,38 @@
             <div class="sig-row"><span class="sig-lbl">Mål 2</span>   <span class="sig-val">$119.00</span></div>
             <div class="sig-row"><span class="sig-lbl">Stop loss</span><span class="sig-val up">$131.50</span></div>
           </div>
+          <div class="sig-lock">
+            <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <span>Låst för icke-medlemmar</span>
+            <a href="https://patreon.com/u81441044?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_fan&utm_content=copyLink"
+               target="_blank" rel="noopener">Lås upp med Premium →</a>
+          </div>
         </div>
 
-        <!-- Signal 3 — locked -->
-        <div class="sig-card neutral">
+        <!-- Signal 3 — LÅST -->
+        <div class="sig-card bear">
           <div class="sig-header">
             <div>
               <div class="sig-sym">AMZN</div>
               <div class="sig-name">Amazon.com Inc.</div>
             </div>
-            <span class="sig-dir neutral">◆ FULL</span>
+            <span class="sig-dir bear">▼ BEAR</span>
           </div>
           <div class="sig-levels">
-            <div class="sig-row"><span class="sig-lbl">Entry</span>    <span class="sig-val gold">$224.00</span></div>
+            <div class="sig-row"><span class="sig-lbl">Entry</span>    <span class="sig-val dn">$224.00</span></div>
             <div class="sig-row"><span class="sig-lbl">Mål 1</span>   <span class="sig-val">$227.00</span></div>
             <div class="sig-row"><span class="sig-lbl">Mål 2</span>   <span class="sig-val">$231.20</span></div>
-            <div class="sig-row"><span class="sig-lbl">Stop loss</span><span class="sig-val dn">$218.20</span></div>
+            <div class="sig-row"><span class="sig-lbl">Stop loss</span><span class="sig-val up">$218.20</span></div>
           </div>
           <div class="sig-lock">
             <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
             <span>Låst för icke-medlemmar</span>
             <a href="https://patreon.com/u81441044?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_fan&utm_content=copyLink"
-               target="_blank" rel="noopener">Gå med för att se →</a>
+               target="_blank" rel="noopener">Lås upp med Premium →</a>
           </div>
         </div>
 
-        <!-- Signal 4 — locked -->
+        <!-- Signal 4 — LÅST -->
         <div class="sig-card bull">
           <div class="sig-header">
             <div>
@@ -904,7 +785,7 @@
             <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
             <span>Låst för icke-medlemmar</span>
             <a href="https://patreon.com/u81441044?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_fan&utm_content=copyLink"
-               target="_blank" rel="noopener">Gå med för att se →</a>
+               target="_blank" rel="noopener">Lås upp med Premium →</a>
           </div>
         </div>
 
@@ -932,7 +813,7 @@
             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
           </div>
           <h3>Teknik + fundamental analys</h3>
-          <p>Vi kopplar räntor, inflation, geopolitik och sentiment direkt till konkreta handelsbeslut.</p>
+          <p>Vi kopplar räntebeslut, sentiment och tekniska indikatorer direkt till konkreta setups.</p>
         </div>
         <div class="feat">
           <div class="feat-icon">
@@ -943,7 +824,7 @@
         </div>
         <div class="feat">
           <div class="feat-icon">
-            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <div style="font-size: 18px;">🥷</div>
           </div>
           <h3>Anonym. Kompromisslös.</h3>
           <p>Analysen och metoden i centrum — inte personen bakom. Innehållet räknas, inte ansiktet.</p>
@@ -964,14 +845,14 @@
         <!-- Standard -->
         <div class="plan">
           <div class="plan-name">Standard</div>
-          <p class="plan-tagline">Veckoanlyser och marknadsöversikter för dig som vill förstå utan att lägga timmar själv.</p>
+          <p class="plan-tagline">Veckoanalyser och marknadsöversikter för dig som vill förstå utan att lägga timmar själv.</p>
           <div class="plan-price">
             <span class="price-cur">$</span><span class="price-num">24</span><span class="price-mo">/mån</span>
           </div>
           <ul class="plan-perks">
             <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Veckovisa marknadsanalyser</li>
             <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Senaste trender aktier &amp; krypto</li>
-            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Djupanalyser av utvalda aktier</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Djupanalyser av utvalda objekt</li>
             <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Exklusiv kanalåtkomst</li>
             <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Ingen bindningstid</li>
           </ul>
@@ -989,11 +870,10 @@
           </div>
           <ul class="plan-perks">
             <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Allt i Standard</li>
-            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Dagliga handelsupplägg &amp; signaler</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Dagliga Scalp Setups &amp; signaler</li>
             <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Konkreta bull/bear-nivåer varje dag</li>
-            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Makroöversikt: räntor, inflation, geopolitik</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Makroöversikt &amp; Geopolitik</li>
             <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Börspsykologi &amp; flockbeteende</li>
-            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Portföljuppdateringar &amp; köplistor</li>
           </ul>
           <a href="https://patreon.com/u81441044?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_fan&utm_content=copyLink"
              target="_blank" rel="noopener" class="plan-btn gold">Gå med nu →</a>
@@ -1002,7 +882,7 @@
         <!-- Elite -->
         <div class="plan">
           <div class="plan-name">Elite</div>
-          <p class="plan-tagline">Fullständigt paket med portföljtransaktioner, kryptoanalyser och prioriterad åtkomst.</p>
+          <p class="plan-tagline">Fullständigt paket med portföljtransaktioner, specialanalyser och prioriterad community-status.</p>
           <div class="plan-price">
             <span class="price-cur">$</span><span class="price-num">99</span><span class="price-mo">/mån</span>
           </div>
@@ -1010,9 +890,8 @@
             <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Allt i Premium</li>
             <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Fullständiga portföljtransaktioner</li>
             <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Detaljerade köp- &amp; säljstrategier</li>
-            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Krypto &amp; MSTR specialanalyser</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Krypto specialanalyser</li>
             <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Prioriterad communityåtkomst</li>
-            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Exklusivt nyhetsbrev</li>
           </ul>
           <a href="https://patreon.com/u81441044?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_fan&utm_content=copyLink"
              target="_blank" rel="noopener" class="plan-btn ghost">Gå med nu</a>
@@ -1036,21 +915,28 @@
   <!-- ═══════════════════ FOOTER ════════════════════ -->
   <footer id="footer">
     <div class="footer-logo">
-      <div class="nav-logo-mark">M</div>
+      <div class="nav-avatar" style="display:inline-flex; margin-right:8px; vertical-align:middle;">🥷</div>
       Metro Finans
     </div>
+
+    <!-- Integrerade sociala kanaler baserat på din input -->
+    <div class="footer-socials">
+      <a href="https://www.instagram.com/ashoursalar/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.tiktok.com/@finansmedmetro" target="_blank" rel="noopener">TikTok</a>
+      <a href="https://x.com/metro_finans" target="_blank" rel="noopener">X (Twitter)</a>
+    </div>
+
     <div class="footer-links">
       <a href="https://finansmetro.se/" target="_blank" rel="noopener">Hemsida</a>
       <a href="https://patreon.com/u81441044?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_fan&utm_content=copyLink" target="_blank" rel="noopener">Patreon</a>
-      <a href="#chart-section">Marknaden</a>
+      <a href="#signals-section">Signaler</a>
       <a href="#membership">Medlemskap</a>
     </div>
     <p class="footer-disclaimer">
-      Allt innehåll på denna sida är utbildningssyfte och utgör inte finansiell rådgivning eller investeringsrekommendationer.
-      Handel med aktier och kryptovalutor innebär risk och du kan förlora hela ditt insatta kapital.
-      Historisk avkastning är ingen garanti för framtida resultat.
+      Allt innehåll på denna sida är i utbildningssyfte och utgör inte finansiell rådvining.
+      Handel med finansiella instrument innebär hög risk.
     </p>
-    <p class="footer-copy">© 2025 Metro Finans. Alla rättigheter förbehållna.</p>
+    <p class="footer-copy">© 2026 Metro Finans. Alla rättigheter förbehållna.</p>
   </footer>
 
   <!-- JS -->
