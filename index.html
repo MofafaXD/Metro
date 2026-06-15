@@ -8,8 +8,8 @@
   <meta property="og:title" content="Metro Finans – Din Trading Community" />
   <meta property="og:description" content="Förstå marknaden innan den rör sig. 14 000+ medlemmar." />
 
-  <!-- Favicon: gold M on dark -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='10' fill='%230a0a0f'/><text x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' font-family='Georgia,serif' font-size='34' font-weight='700' fill='%23d4af37'>M</text></svg>" />
+  <!-- Hemsidans officiella Tab Icon (Favicon) -->
+  <link rel="icon" type="image/png" href="5_2.png" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -83,15 +83,11 @@
       color: var(--gold);
     }
 
-    /* Karaktärs-avatar inspirerad av logotypen i image_67a0a3.png och ångrar sålde xrp (9).png */
-    .nav-avatar {
+    .nav-avatar-img {
       width: 36px; height: 36px;
-      background: #111;
       border: 1px solid var(--gold);
       border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      overflow: hidden;
-      font-size: 20px;
+      object-fit: cover;
     }
 
     .nav-links {
@@ -158,21 +154,54 @@
 
     /* ─── HERO ───────────────────────────────────────────── */
     #hero {
-      min-height: 90vh;
+      min-height: 95vh;
       padding: 160px 24px 80px;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       position: relative;
       overflow: hidden;
     }
 
+    .hero-container {
+      max-width: 1160px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      align-items: center;
+      gap: 40px;
+      text-align: left;
+      z-index: 10;
+    }
+
     .hero-glow {
       position: absolute;
-      top: 20%; left: 50%; transform: translateX(-50%);
+      top: 20%; left: 30%; transform: translateX(-50%);
       width: 900px; height: 500px;
       background: radial-gradient(ellipse at center, rgba(212,175,55,0.07) 0%, transparent 65%);
       pointer-events: none;
+    }
+
+    /* Transparent karaktärsmaskot till höger i herosektionen */
+    .hero-mascot-wrapper {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      position: relative;
+    }
+
+    .hero-mascot-img {
+      max-width: 100%;
+      height: auto;
+      max-height: 520px;
+      object-fit: contain;
+      filter: drop-shadow(0 10px 30px rgba(0,0,0,0.7));
+      animation: float-slow 6s ease-in-out infinite;
+    }
+
+    @keyframes float-slow {
+      0%, 100% { transform: translateY(0px); }
+      50%      { transform: translateY(-10px); }
     }
 
     .eyebrow {
@@ -200,7 +229,6 @@
       50%       { opacity: 0.2; }
     }
 
-    /* Slogan från bilden image_67a0a3.png */
     .sub-eyebrow {
       font-size: 13px;
       letter-spacing: 0.2em;
@@ -212,10 +240,9 @@
 
     h1 {
       font-family: 'Instrument Serif', serif;
-      font-size: clamp(46px, 8vw, 96px);
-      line-height: 1.02;
+      font-size: clamp(40px, 6vw, 84px);
+      line-height: 1.05;
       font-weight: 400;
-      max-width: 920px;
       margin-bottom: 26px;
       letter-spacing: -0.01em;
     }
@@ -232,7 +259,7 @@
     }
 
     .hero-btns {
-      display: flex; gap: 14px; flex-wrap: wrap; justify-content: center;
+      display: flex; gap: 14px; flex-wrap: wrap;
       margin-bottom: 64px;
     }
 
@@ -262,7 +289,7 @@
     .btn-outline:hover { border-color: rgba(240,237,232,0.45); transform: translateY(-2px); }
 
     .hero-stats {
-      display: flex; gap: 56px; flex-wrap: wrap; justify-content: center;
+      display: flex; gap: 56px; flex-wrap: wrap;
     }
 
     .stat-num {
@@ -361,7 +388,7 @@
 
     .sig-levels {
       display: flex; flex-direction: column; gap: 8px;
-      filter: blur(4px); /* Samtliga mål låsta visuellt */
+      filter: blur(4px);
       user-select: none;
     }
 
@@ -391,22 +418,27 @@
     .sig-lock span { font-size: 12px; color: var(--text); font-weight: 500; }
     .sig-lock a { font-size: 11px; color: var(--gold); margin-top: 2px; text-decoration: underline; }
 
-    /* ─── FEATURES ───────────────────────────────────────── */
+    /* ─── FEATURES & MASCOT LAYOUT ───────────────────────── */
     #why-section { background: var(--bg); }
+
+    .why-content-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 40px;
+      align-items: start;
+    }
 
     .features-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 1px;
-      background: var(--border3);
-      border: 0.5px solid var(--border3);
-      border-radius: var(--radius-xl);
-      overflow: hidden;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
     }
 
     .feat {
       background: var(--bg2);
-      padding: 36px 30px;
+      padding: 30px;
+      border: 0.5px solid var(--border3);
+      border-radius: var(--radius-lg);
     }
 
     .feat-icon {
@@ -421,6 +453,25 @@
 
     .feat h3 { font-size: 15px; font-weight: 500; margin-bottom: 10px; }
     .feat p  { font-size: 14px; color: var(--muted); font-weight: 300; line-height: 1.65; }
+
+    .inline-mascot-box {
+      background: var(--bg2);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .inline-mascot-img {
+      max-width: 100%;
+      height: auto;
+      max-height: 260px;
+      object-fit: contain;
+    }
 
     /* ─── MEMBERSHIP ─────────────────────────────────────── */
     #membership { background: var(--bg); }
@@ -488,7 +539,7 @@
       list-style: none;
       flex: 1;
       margin-bottom: 30px;
-      display: flex; flex-direction: column; gap: 0;
+      display: flex; flex-direction: column;
     }
 
     .plan-perks li {
@@ -560,26 +611,45 @@
       font-family: 'Instrument Serif', serif;
       font-size: 22px;
       color: var(--gold);
-      margin-bottom: 20px;
+      margin-bottom: 24px;
     }
 
-    /* Integrering av begärda sociala medie-länkar */
+    .footer-avatar-img {
+      width: 40px; height: 40px;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    /* Sociala medier med inbyggda logotyper bredvid varandra */
     .footer-socials {
-      display: flex; gap: 20px; justify-content: center; margin-bottom: 24px;
+      display: flex; gap: 16px; justify-content: center; margin-bottom: 32px;
+      flex-wrap: wrap;
     }
 
     .footer-socials a {
-      font-size: 12px;
-      color: var(--gold);
-      border: 1px solid var(--border2);
-      padding: 6px 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      border: 1px solid var(--border);
+      background: var(--bg2);
+      padding: 8px 16px;
       border-radius: var(--radius-sm);
-      transition: background 0.2s, color 0.2s;
+      transition: border-color 0.2s, background 0.2s, color 0.2s;
     }
 
     .footer-socials a:hover {
+      border-color: var(--gold);
       background: var(--gold-faint);
       color: var(--gold-lt);
+    }
+
+    .footer-socials svg {
+      width: 16px; height: 16px;
+      fill: currentColor;
     }
 
     .footer-links {
@@ -602,13 +672,19 @@
 
     .footer-copy { font-size: 11px; color: var(--subtle); }
 
-    /* ─── MOBILE ─────────────────────────────────────────── */
+    /* ─── RESPONSIVE ─────────────────────────────────────── */
+    @media (max-width: 960px) {
+      .hero-container { grid-template-columns: 1fr; text-align: center; }
+      .hero-mascot-wrapper { justify-content: center; margin-top: 20px; }
+      .hero-btns, .hero-stats { justify-content: center; }
+      .why-content-wrapper { grid-template-columns: 1fr; }
+      .inline-mascot-box { order: -1; max-width: 340px; margin: 0 auto; }
+    }
+
     @media (max-width: 700px) {
       #nav { padding: 0 18px; }
       .nav-links { display: none; }
       .section { padding: 64px 20px; }
-      .hero-stats { gap: 28px; }
-      #hero { padding: 140px 20px 80px; }
     }
 
     /* ─── SCROLL REVEAL ──────────────────────────────────── */
@@ -629,8 +705,7 @@
   <!-- ═══════════════════ NAV ════════════════════ -->
   <nav id="nav">
     <a href="#" class="nav-logo">
-      <!-- Rånarluva/Kring-ikon som representerar karaktären -->
-      <div class="nav-avatar">🥷</div>
+      <img src="5_2.png" alt="Metro Finans" class="nav-avatar-img" />
       Metro Finans
     </a>
     <ul class="nav-links">
@@ -650,54 +725,59 @@
   <!-- ═══════════════════ HERO ════════════════════ -->
   <section id="hero">
     <div class="hero-glow"></div>
-
-    <div class="eyebrow">
-      <div class="live-dot"></div>
-      Sveriges snabbast växande investerarcommunity
-    </div>
-
-    <!-- Slogan adderad från din profilbild -->
-    <div class="sub-eyebrow">När andra är rädda är vi förberedda</div>
-
-    <h1>Förstå marknaden <em>innan</em><br>den rör sig</h1>
-
-    <p class="hero-desc">
-      Dagliga analyser av aktier, krypto och makro. Konkreta nivåer, tydliga scenarios — utan hype, utan filter.
-    </p>
-
-    <div class="hero-btns">
-      <a href="https://patreon.com/u81441044?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_fan&utm_content=copyLink"
-         target="_blank" rel="noopener" class="btn-gold">Gå med nu →</a>
-      <a href="#membership" class="btn-outline">Se alla planer</a>
-    </div>
-
-    <div class="hero-stats">
+    <div class="hero-container">
+      
       <div>
-        <span class="stat-num">14 000+</span>
-        <span class="stat-label">Medlemmar</span>
+        <div class="eyebrow">
+          <div class="live-dot"></div>
+          Sveriges snabbast växande investerarcommunity
+        </div>
+        <div class="sub-eyebrow">När andra är rädda är vi förberedda</div>
+        <h1>Förstå marknaden <em>innan</em><br>den rör sig</h1>
+        <p class="hero-desc">
+          Dagliga analyser av aktier, krypto och makro. Konkreta nivåer, tydliga scenarios — utan hype, utan filter.
+        </p>
+
+        <div class="hero-btns">
+          <a href="https://patreon.com/u81441044?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_fan&utm_content=copyLink"
+             target="_blank" rel="noopener" class="btn-gold">Gå med nu →</a>
+          <a href="#membership" class="btn-outline">Se alla planer</a>
+        </div>
+
+        <div class="hero-stats">
+          <div>
+            <span class="stat-num">14 000+</span>
+            <span class="stat-label">Medlemmar</span>
+          </div>
+          <div>
+            <span class="stat-num">Dagligen</span>
+            <span class="stat-label">Nya analyser</span>
+          </div>
+          <div>
+            <span class="stat-num">0 kr</span>
+            <span class="stat-label">Bindningstid</span>
+          </div>
+        </div>
       </div>
-      <div>
-        <span class="stat-num">Dagligen</span>
-        <span class="stat-label">Nya analyser</span>
+
+      <!-- Transparent Maskot-bild (höger sida på desktop) -->
+      <div class="hero-mascot-wrapper">
+        <img src="edited-photo_2.png" alt="Mascot" class="hero-mascot-img" />
       </div>
-      <div>
-        <span class="stat-num">0 kr</span>
-        <span class="stat-label">Bindningstid</span>
-      </div>
+
     </div>
   </section>
 
-  <!-- ═══════════════════ SIGNALS (ÄNDRAD RUBRIK) ════════════════════ -->
+  <!-- ═══════════════════ SIGNALS ════════════════════ -->
   <section id="signals-section">
     <div class="section reveal">
       <p class="section-eyebrow">Exklusiva handelsupplägg</p>
-      <!-- Ändrad rubrik enligt önskemål -->
       <h2 class="section-title">Signaler - Dagens SCALP SETUPS</h2>
       <p class="section-sub">Varje handelsdag publiceras konkreta bull/bear-scenarios med exakta och strategiska nivåer.</p>
 
       <div class="signals-grid">
 
-        <!-- Signal 1 — LÅST -->
+        <!-- Signal 1 -->
         <div class="sig-card bull">
           <div class="sig-header">
             <div>
@@ -720,7 +800,7 @@
           </div>
         </div>
 
-        <!-- Signal 2 — LÅST -->
+        <!-- Signal 2 -->
         <div class="sig-card bear">
           <div class="sig-header">
             <div>
@@ -743,7 +823,7 @@
           </div>
         </div>
 
-        <!-- Signal 3 — LÅST -->
+        <!-- Signal 3 -->
         <div class="sig-card bear">
           <div class="sig-header">
             <div>
@@ -766,7 +846,7 @@
           </div>
         </div>
 
-        <!-- Signal 4 — LÅST -->
+        <!-- Signal 4 -->
         <div class="sig-card bull">
           <div class="sig-header">
             <div>
@@ -798,38 +878,46 @@
     <div class="section reveal">
       <p class="section-eyebrow">Varför Metro Finans</p>
       <h2 class="section-title">Insikt. Sammanhang. Praktisk nytta.</h2>
-      <p class="section-sub">Inte efterklokhet. Inte show. Inte löften om 300% på en månad.</p>
+      <p class="section-sub">Inte efterklokhet. Inte show. Inte löften om guld och gröna skogar.</p>
 
-      <div class="features-grid">
-        <div class="feat">
-          <div class="feat-icon">
-            <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      <div class="why-content-wrapper">
+        <div class="features-grid">
+          <div class="feat">
+            <div class="feat-icon">
+              <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <h3>Dagliga marknadsbrev</h3>
+            <p>Analyser av aktier, krypto och makro varje handelsdag med konkreta nivåer och tydlig kontext.</p>
           </div>
-          <h3>Dagliga marknadsbrev</h3>
-          <p>Analyser av aktier, krypto och makro varje handelsdag med konkreta nivåer och tydlig kontext.</p>
+          <div class="feat">
+            <div class="feat-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            </div>
+            <h3>Teknik + fundamental analys</h3>
+            <p>Vi kopplar räntebeslut, sentiment och tekniska indikatorer direkt till konkreta setups.</p>
+          </div>
+          <div class="feat">
+            <div class="feat-icon">
+              <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <h3>Strukturerad community</h3>
+            <p>Ingen pump &amp; dump. Börspsykologi på riktigt — flockbeteende och hur småsparare ofta blir spelade.</p>
+          </div>
+          <div class="feat">
+            <div class="feat-icon">
+              <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <h3>Anonym. Kompromisslös.</h3>
+            <p>Analysen och metoden i centrum — inte personen bakom. Innehållet räknas, inte ansiktet.</p>
+          </div>
         </div>
-        <div class="feat">
-          <div class="feat-icon">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-          </div>
-          <h3>Teknik + fundamental analys</h3>
-          <p>Vi kopplar räntebeslut, sentiment och tekniska indikatorer direkt till konkreta setups.</p>
-        </div>
-        <div class="feat">
-          <div class="feat-icon">
-            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          </div>
-          <h3>Strukturerad community</h3>
-          <p>Ingen pump &amp; dump. Börspsykologi på riktigt — flockbeteende och hur småsparare ofta blir spelade.</p>
-        </div>
-        <div class="feat">
-          <div class="feat-icon">
-            <div style="font-size: 18px;">🥷</div>
-          </div>
-          <h3>Anonym. Kompromisslös.</h3>
-          <p>Analysen och metoden i centrum — inte personen bakom. Innehållet räknas, inte ansiktet.</p>
+
+        <!-- Tecknad maskot placerad i anslutning till funktionerna -->
+        <div class="inline-mascot-box">
+          <img src="edited-photo (1)_2.png" alt="Mascot Art" class="inline-mascot-img" />
         </div>
       </div>
+
     </div>
   </section>
 
@@ -915,15 +1003,27 @@
   <!-- ═══════════════════ FOOTER ════════════════════ -->
   <footer id="footer">
     <div class="footer-logo">
-      <div class="nav-avatar" style="display:inline-flex; margin-right:8px; vertical-align:middle;">🥷</div>
+      <img src="5_2.png" alt="Metro Finans Logo" class="footer-avatar-img" />
       Metro Finans
     </div>
 
-    <!-- Integrerade sociala kanaler baserat på din input -->
+    <!-- Sociala medier med tillhörande logotyper integrerade -->
     <div class="footer-socials">
-      <a href="https://www.instagram.com/ashoursalar/" target="_blank" rel="noopener">Instagram</a>
-      <a href="https://www.tiktok.com/@finansmedmetro" target="_blank" rel="noopener">TikTok</a>
-      <a href="https://x.com/metro_finans" target="_blank" rel="noopener">X (Twitter)</a>
+      <!-- Instagram -->
+      <a href="https://www.instagram.com/ashoursalar/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+        Instagram
+      </a>
+      <!-- TikTok -->
+      <a href="https://www.tiktok.com/@finansmedmetro" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.032 2.61-.013 3.91-.013.08 1.52.74 2.94 1.83 3.97 1.15 1.02 2.65 1.58 4.2 1.63v3.9c-1.39-.11-2.74-.69-3.83-1.57-.42-.34-.81-.73-1.15-1.16l-.01 7.26c.1 2.13-.53 4.25-1.78 5.89-1.6 2.05-4.14 3.19-6.73 3.01-2.58-.17-4.92-1.6-6.15-3.88-1.42-2.56-1.23-5.83.47-8.19 1.48-2.07 3.97-3.21 6.53-2.96v4c-1.12-.13-2.26.25-3.03 1.08-.85.91-1.1 2.27-.63 3.44.43 1.12 1.53 1.87 2.73 1.89 1.34.05 2.58-.78 3-2.03.16-.48.23-.98.22-1.48l.02-14.28z"/></svg>
+        TikTok
+      </a>
+      <!-- X (Twitter) -->
+      <a href="https://x.com/metro_finans" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        X (Twitter)
+      </a>
     </div>
 
     <div class="footer-links">
@@ -933,14 +1033,12 @@
       <a href="#membership">Medlemskap</a>
     </div>
     <p class="footer-disclaimer">
-      Allt innehåll på denna sida är i utbildningssyfte och utgör inte finansiell rådvining.
+      Allt innehåll på denna sida är i utbildningssyfte och utgör inte finansiell rådgivning.
       Handel med finansiella instrument innebär hög risk.
     </p>
     <p class="footer-copy">© 2026 Metro Finans. Alla rättigheter förbehållna.</p>
   </footer>
 
-  <!-- JS -->
   <script src="main.js"></script>
-
 </body>
 </html>
