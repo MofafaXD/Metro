@@ -8,8 +8,8 @@
   <meta property="og:title" content="Metro Finans – Din Trading Community" />
   <meta property="og:description" content="Förstå marknaden innan den rör sig. 14 000+ medlemmar." />
 
-  <!-- Hemsidans officiella Tab Icon (Favicon) -->
-  <link rel="icon" type="image/png" href="metro-finans-logo.png" />
+  <!-- Hemsidans officiella Tab Icon (Favicon) – Nu ändrad till maskoten -->
+  <link rel="icon" type="image/png" href="maskot-hero-transparent.png" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -417,20 +417,19 @@
     .sig-lock span { font-size: 12px; color: var(--text); font-weight: 500; }
     .sig-lock a { font-size: 11px; color: var(--gold); margin-top: 2px; text-decoration: underline; }
 
-    /* ─── FEATURES & MASCOT LAYOUT ───────────────────────── */
+    /* ─── FEATURES LAYOUT (Uppdaterad för fullbredd utan bild) ─── */
     #why-section { background: var(--bg); }
 
     .why-content-wrapper {
-      display: grid;
-      grid-template-columns: 1fr 340px;
-      gap: 40px;
-      align-items: start;
+      display: block; /* Ändrad från grid till block för fullbredd */
+      width: 100%;
     }
 
     .features-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Expanderar snyggt */
       gap: 16px;
+      width: 100%;
     }
 
     .feat {
@@ -452,25 +451,6 @@
 
     .feat h3 { font-size: 15px; font-weight: 500; margin-bottom: 10px; }
     .feat p  { font-size: 14px; color: var(--muted); font-weight: 300; line-height: 1.65; }
-
-    .inline-mascot-box {
-      background: var(--bg2);
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius-xl);
-      padding: 24px;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .inline-mascot-img {
-      max-width: 100%;
-      height: auto;
-      max-height: 260px;
-      object-fit: contain;
-    }
 
     /* ─── MEMBERSHIP ─────────────────────────────────────── */
     #membership { background: var(--bg); }
@@ -675,8 +655,6 @@
       .hero-container { grid-template-columns: 1fr; text-align: center; }
       .hero-mascot-wrapper { justify-content: center; margin-top: 20px; }
       .hero-btns, .hero-stats { justify-content: center; }
-      .why-content-wrapper { grid-template-columns: 1fr; }
-      .inline-mascot-box { order: -1; max-width: 340px; margin: 0 auto; }
     }
 
     @media (max-width: 700px) {
@@ -733,7 +711,7 @@
         <div class="sub-eyebrow">När andra är rädda är vi förberedda</div>
         <h1>Förstå marknaden <em>innan</em><br>den rör sig</h1>
         <p class="hero-desc">
-          Dagliga analyser av aktier, krypto och makro. Konkreta niveauér, tydliga scenarios — utan hype, utan filter.
+          Dagliga analyser av aktier, krypto och makro. Konkreta nivåer, tydliga scenarios — utan hype, utan filter.
         </p>
 
         <div class="hero-btns">
@@ -871,7 +849,7 @@
     </div>
   </section>
 
-  <!-- ═══════════════════ WHY ════════════════════ -->
+  <!-- ═══════════════════ WHY (Illustration helt borttagen) ════════════════════ -->
   <section id="why-section">
     <div class="section reveal">
       <p class="section-eyebrow">Varför Metro Finans</p>
@@ -908,11 +886,6 @@
             <h3>Anonym. Kompromisslös.</h3>
             <p>Analysen och metoden i centrum — inte personen bakom. Innehållet räknas, inte ansiktet.</p>
           </div>
-        </div>
-
-        <!-- Tecknad maskot-illustration -->
-        <div class="inline-mascot-box">
-          <img src="maskot-tecknad-illustration.png" alt="Mascot Art" class="inline-mascot-img" />
         </div>
       </div>
 
