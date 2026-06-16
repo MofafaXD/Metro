@@ -8,10 +8,8 @@
   <meta property="og:title" content="Metro Finans – Din Trading Community" />
   <meta property="og:description" content="Förstå marknaden innan den rör sig. 14 000+ medlemmar." />
 
-  <!-- Hemsidans officiella Tab Icon (Favicon) – Nu ändrad till maskoten -->
   <link rel="icon" type="image/png" href="maskot-hero-transparent.png" />
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
@@ -336,7 +334,64 @@
       color: var(--muted);
       max-width: 500px;
       line-height: 1.7;
-      margin-bottom: 52px;
+      margin-bottom: 32px; /* Minskat något för att ge plats åt toggle */
+    }
+
+    /* ─── PRICING TOGGLE BUTTON ──────────────────────────── */
+    .pricing-toggle-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 48px;
+    }
+
+    .toggle-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+
+    .toggle-label.active {
+      color: var(--text);
+    }
+
+    .toggle-label .discount {
+      color: var(--green);
+      font-size: 12px;
+      margin-left: 4px;
+      font-family: 'DM Mono', monospace;
+      background: var(--green-bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .pricing-toggle-btn {
+      position: relative;
+      width: 56px;
+      height: 30px;
+      background: var(--bg4);
+      border: 1px solid var(--border2);
+      border-radius: 100px;
+      cursor: pointer;
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    .pricing-toggle-btn::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 22px;
+      height: 22px;
+      background: var(--gold);
+      border-radius: 50%;
+      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .pricing-toggle-btn.yearly::after {
+      transform: translateX(26px);
     }
 
     /* ─── SIGNALS ────────────────────────────────────────── */
@@ -417,7 +472,7 @@
     .sig-lock span { font-size: 12px; color: var(--text); font-weight: 500; }
     .sig-lock a { font-size: 11px; color: var(--gold); margin-top: 2px; text-decoration: underline; }
 
-    /* ─── FEATURES LAYOUT ─── */
+    /* ─── FEATURES LAYOUT ─────────────────────────────────── */
     #why-section { background: var(--bg); }
 
     .why-content-wrapper {
@@ -452,81 +507,8 @@
     .feat h3 { font-size: 15px; font-weight: 500; margin-bottom: 10px; }
     .feat p  { font-size: 14px; color: var(--muted); font-weight: 300; line-height: 1.65; }
 
-    /* ─── MEMBERSHIP & TOGGLE SWITCH ──────────────────────── */
+    /* ─── MEMBERSHIP ─────────────────────────────────────── */
     #membership { background: var(--bg); }
-
-    /* Månad / År Switch-knapp */
-    .toggle-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 40px;
-    }
-
-    .toggle-label {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--muted);
-      transition: color 0.2s;
-    }
-
-    .toggle-label.active {
-      color: var(--gold);
-    }
-
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 54px;
-      height: 28px;
-    }
-
-    .switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      inset: 0;
-      background-color: var(--bg3);
-      border: 1px solid var(--border2);
-      border-radius: 34px;
-      transition: 0.3s ease;
-    }
-
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 20px;
-      width: 20px;
-      left: 3px;
-      bottom: 3px;
-      background-color: var(--gold);
-      border-radius: 50%;
-      transition: 0.3s ease;
-    }
-
-    input:checked + .slider {
-      border-color: var(--gold);
-    }
-
-    input:checked + .slider:before {
-      transform: translateX(26px);
-      background-color: var(--gold-lt);
-    }
-
-    .discount-tag {
-      font-size: 11px;
-      background: var(--green-bg);
-      color: var(--green);
-      padding: 3px 8px;
-      border-radius: 100px;
-      font-weight: 500;
-    }
 
     .plans-grid {
       display: grid;
@@ -558,23 +540,6 @@
       font-size: 10px; font-weight: 500;
       letter-spacing: 0.05em; text-transform: uppercase;
       padding: 3px 10px; border-radius: 100px;
-      z-index: 2;
-    }
-
-    .plan-save-badge {
-      position: absolute; top: 20px; left: 20px;
-      background: var(--green-bg);
-      color: var(--green);
-      border: 1px solid rgba(34,197,94,0.2);
-      font-size: 10px; font-weight: 600;
-      padding: 3px 10px; border-radius: 100px;
-      display: none;
-      animation: fadeIn 0.3s ease forwards;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-5px); }
-      to { opacity: 1; transform: translateY(0); }
     }
 
     .plan-name {
@@ -582,7 +547,6 @@
       font-size: 24px;
       font-weight: 400;
       margin-bottom: 6px;
-      margin-top: 15px; /* Ger plats åt badges överst */
     }
 
     .plan-tagline {
@@ -592,15 +556,12 @@
       line-height: 1.55;
     }
 
-    .plan-price { margin-bottom: 28px; }
-
-    .price-old-wrapper {
-      font-size: 14px;
-      color: var(--muted);
-      text-decoration: line-through;
-      margin-bottom: 2px;
-      display: none;
-      height: 20px;
+    /* FIX: Fast höjd hindrar korten och listan under från att röra sig nedåt/hoppa */
+    .plan-price { 
+      margin-bottom: 28px; 
+      height: 44px; 
+      display: flex;
+      align-items: baseline;
     }
 
     .price-num {
@@ -609,7 +570,6 @@
       color: var(--gold);
       line-height: 1;
       display: inline-block;
-      transition: transform 0.2s ease;
     }
 
     .price-cur { font-size: 18px; vertical-align: top; margin-top: 8px; display: inline-block; color: var(--gold); opacity: 0.7; }
@@ -779,7 +739,6 @@
 </head>
 <body>
 
-  <!-- ═══════════════════ NAV ════════════════════ -->
   <nav id="nav">
     <a href="#" class="nav-logo">
       <img src="metro-finans-logo.png" alt="Metro Finans" class="nav-avatar-img" />
@@ -790,16 +749,14 @@
       <li><a href="#why-section">Om oss</a></li>
       <li><a href="#membership">Medlemskap</a></li>
     </ul>
-    <a href="https://www.patreon.com/cw/u81441044"
+    <a href="https://patreon.com/u81441044"
        target="_blank" rel="noopener" class="nav-cta">Bli Medlem</a>
   </nav>
 
-  <!-- ═══════════════════ TICKER BAR ════════════════════ -->
   <div id="ticker-bar">
     <div id="ticker-track"></div>
   </div>
 
-  <!-- ═══════════════════ HERO ════════════════════ -->
   <section id="hero">
     <div class="hero-glow"></div>
     <div class="hero-container">
@@ -816,7 +773,7 @@
         </p>
 
         <div class="hero-btns">
-          <a href="https://www.patreon.com/cw/u81441044"
+          <a href="https://patreon.com/u81441044"
              target="_blank" rel="noopener" class="btn-gold">Gå med nu →</a>
           <a href="#membership" class="btn-outline">Se alla planer</a>
         </div>
@@ -837,7 +794,6 @@
         </div>
       </div>
 
-      <!-- Transparent Maskot i herosektionen -->
       <div class="hero-mascot-wrapper">
         <img src="maskot-hero-transparent.png" alt="Mascot" class="hero-mascot-img" />
       </div>
@@ -845,7 +801,6 @@
     </div>
   </section>
 
-  <!-- ═══════════════════ SIGNALS ════════════════════ -->
   <section id="signals-section">
     <div class="section reveal">
       <p class="section-eyebrow">Exklusiva handelsupplägg</p>
@@ -854,7 +809,6 @@
 
       <div class="signals-grid">
 
-        <!-- Signal 1 -->
         <div class="sig-card bull">
           <div class="sig-header">
             <div>
@@ -872,12 +826,11 @@
           <div class="sig-lock">
             <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
             <span>Låst för icke-medlemmar</span>
-            <a href="https://www.patreon.com/cw/u81441044"
+            <a href="https://patreon.com/u81441044"
                target="_blank" rel="noopener">Lås upp med Premium →</a>
           </div>
         </div>
 
-        <!-- Signal 2 -->
         <div class="sig-card bear">
           <div class="sig-header">
             <div>
@@ -895,12 +848,11 @@
           <div class="sig-lock">
             <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
             <span>Låst för icke-medlemmar</span>
-            <a href="https://www.patreon.com/cw/u81441044"
+            <a href="https://patreon.com/u81441044"
                target="_blank" rel="noopener">Lås upp med Premium →</a>
           </div>
         </div>
 
-        <!-- Signal 3 -->
         <div class="sig-card bear">
           <div class="sig-header">
             <div>
@@ -918,12 +870,11 @@
           <div class="sig-lock">
             <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
             <span>Låst för icke-medlemmar</span>
-            <a href="https://www.patreon.com/cw/u81441044"
+            <a href="https://patreon.com/u81441044"
                target="_blank" rel="noopener">Lås upp med Premium →</a>
           </div>
         </div>
 
-        <!-- Signal 4 -->
         <div class="sig-card bull">
           <div class="sig-header">
             <div>
@@ -941,7 +892,7 @@
           <div class="sig-lock">
             <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
             <span>Låst för icke-medlemmar</span>
-            <a href="https://www.patreon.com/cw/u81441044"
+            <a href="https://patreon.com/u81441044"
                target="_blank" rel="noopener">Lås upp med Premium →</a>
           </div>
         </div>
@@ -950,7 +901,6 @@
     </div>
   </section>
 
-  <!-- ═══════════════════ WHY ════════════════════ -->
   <section id="why-section">
     <div class="section reveal">
       <p class="section-eyebrow">Varför Metro Finans</p>
@@ -993,55 +943,43 @@
     </div>
   </section>
 
-  <!-- ═══════════════════ MEMBERSHIP ════════════════════ -->
   <section id="membership">
     <div class="section reveal">
       <p class="section-eyebrow">Patreon-planer</p>
       <h2 class="section-title">Välj din nivå</h2>
-      <p class="section-sub">Välj betalningsperiod nedan. Spara stort på årsmedlemskap. Betalning via Patreon.</p>
+      <p class="section-sub">Ingen bindningstid. Avsluta när du vill. Betalning via Patreon.</p>
 
-      <!-- Period-Switch (Månadsvis / Årsvis) -->
-      <div class="toggle-container">
+      <div class="pricing-toggle-container">
         <span id="label-monthly" class="toggle-label active">Månadsvis</span>
-        <label class="switch">
-          <input type="checkbox" id="period-toggle" onchange="togglePricing()">
-          <span class="slider"></span>
-        </label>
-        <span id="label-yearly" class="toggle-label">Årsvis</span>
-        <span class="discount-tag">Spara upp till 35%</span>
+        <button id="pricing-toggle" class="pricing-toggle-btn" aria-label="Växla prissättning"></button>
+        <span id="label-yearly" class="toggle-label">Årsvis <span class="discount">-15%</span></span>
       </div>
 
       <div class="plans-grid">
 
-        <!-- Deluxe -->
-        <div class="plan" id="plan-deluxe">
-          <div class="plan-save-badge">Spara 35%</div>
+        <div class="plan" data-monthly="24" data-yearly="245">
           <div class="plan-name">Deluxe</div>
           <p class="plan-tagline">För dig som vill följa mina marknadsanalyser utan signaler, targets eller personlig hjälp.</p>
           <div class="plan-price">
-            <div class="price-old-wrapper"><span class="price-old">$16.80</span></div>
-            <span class="price-cur">$</span><span class="price-num" id="price-deluxe-val">24</span><span class="price-mo" id="period-deluxe-text">/mån</span>
+            <span class="price-cur">$</span><span class="price-num">24</span><span class="price-mo">/mån</span>
           </div>
           <ul class="plan-perks">
             <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Veckovisa marknadsanalyser</li>
             <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Teknisk och fundamental marknadsgenomgång</li>
             <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Övergripande syn på aktier, krypto och makro</li>
             <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Tillgång till Metro Finans portföljöversikt för aktier och krypto</li>
-            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Möjlighet att ställa frågor i gruppchatt via Patreon</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Gruppchatt via Patreon Möjlighet att ställa frågor i</li>
           </ul>
-          <a href="https://www.patreon.com/cw/u81441044"
+          <a href="https://patreon.com/u81441044"
              target="_blank" rel="noopener" class="plan-btn ghost">Gå med nu</a>
         </div>
 
-        <!-- Premium -->
-        <div class="plan featured" id="plan-premium">
+        <div class="plan featured" data-monthly="29" data-yearly="295">
           <div class="plan-badge">Populärast</div>
-          <div class="plan-save-badge">Spara 35%</div>
           <div class="plan-name">Premium</div>
           <p class="plan-tagline">För dig som vill ha mina marknadsanalyser, tekniska nivåer, targets och löpande marknadsidéer.</p>
           <div class="plan-price">
-            <div class="price-old-wrapper"><span class="price-old">$20.30</span></div>
-            <span class="price-cur">$</span><span class="price-num" id="price-premium-val">29</span><span class="price-mo" id="period-premium-text">/mån</span>
+            <span class="price-cur">$</span><span class="price-num">29</span><span class="price-mo">/mån</span>
           </div>
           <ul class="plan-perks">
             <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Allt som ingår i Deluxe</li>
@@ -1052,20 +990,17 @@
             <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Veckovisa videoanalyser</li>
             <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Tillgång till portföljöversikt för aktier och krypto</li>
             <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Enklare portföljfrågor i utbildningssyfte</li>
-            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Gruppchatt via Patreon &amp; Discord</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Gruppchatt via Patreon Discord</li>
           </ul>
-          <a href="https://www.patreon.com/cw/u81441044"
+          <a href="https://patreon.com/u81441044"
              target="_blank" rel="noopener" class="plan-btn gold">Gå med nu →</a>
         </div>
 
-        <!-- AKTIESKOLAN - Utbildning -->
-        <div class="plan" id="plan-aktieskolan">
-          <div class="plan-save-badge">Spara 35%</div>
+        <div class="plan" data-monthly="70" data-yearly="715">
           <div class="plan-name">AKTIESKOLAN - Utbildning</div>
           <p class="plan-tagline">För dig som vill lära dig grunderna bakom analysen och förstå hur jag tänker kring marknaden.</p>
           <div class="plan-price">
-            <div class="price-old-wrapper"><span class="price-old">$49</span></div>
-            <span class="price-cur">$</span><span class="price-num" id="price-aktieskolan-val">70</span><span class="price-mo" id="period-aktieskolan-text">/mån</span>
+            <span class="price-cur">$</span><span class="price-num">70</span><span class="price-mo">/mån</span>
           </div>
           <ul class="plan-perks">
             <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Allt som ingår i Premium</li>
@@ -1073,20 +1008,18 @@
             <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Utbildning inom teknisk analys</li>
             <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Utbildning inom fundamental analys</li>
             <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Utbildning inom marknadspsykologi och omvärldsanalys</li>
-            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PDF-material &amp; PowerPoint-material</li>
-            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Upp till 3 tekniska analyser med feedback på eget arbete</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PDF material PowerPoint material Upp till 3 tekniska analyser där du får feedback på ditt eget arbete</li>
           </ul>
-          <a href="https://www.patreon.com/cw/u81441044"
+          <a href="https://patreon.com/u81441044"
              target="_blank" rel="noopener" class="plan-btn ghost">Gå med nu</a>
         </div>
 
       </div>
 
-      <p class="plans-note">Alla planer hanteras säkert via Patreon · Inga dolda avgifter · Avsluta när du vill</p>
+      <p class="plans-note">Alla planer hanteras via Patreon · Säker betalning · Avsluta när som helst</p>
     </div>
   </section>
 
-  <!-- ═══════════════════ QUOTE ════════════════════ -->
   <div id="quote-band">
     <p class="quote-text">
       "När andra är rädda —<br>
@@ -1095,7 +1028,6 @@
     <p class="quote-attr">— Metro Finans · Insikter och strategier inom ekonomi, aktier och krypto</p>
   </div>
 
-  <!-- ═══════════════════ FOOTER ════════════════════ -->
   <footer id="footer">
     <div class="footer-logo">
       <img src="metro-finans-logo.png" alt="Metro Finans Logo" class="footer-avatar-img" />
@@ -1103,17 +1035,14 @@
     </div>
 
     <div class="footer-socials">
-      <!-- Instagram -->
       <a href="https://www.instagram.com/ashoursalar/" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
         Instagram
       </a>
-      <!-- TikTok -->
       <a href="https://www.tiktok.com/@finansmedmetro" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.032 2.61-.013 3.91-.013.08 1.52.74 2.94 1.83 3.97 1.15 1.02 2.65 1.58 4.2 1.63v3.9c-1.39-.11-2.74-.69-3.83-1.57-.42-.34-.81-.73-1.15-1.16l-.01 7.26c.1 2.13-.53 4.25-1.78 5.89-1.6 2.05-4.14 3.19-6.73 3.01-2.58-.17-4.92-1.6-6.15-3.88-1.42-2.56-1.23-5.83.47-8.19 1.48-2.07 3.97-3.21 6.53-2.96v4c-1.12-.13-2.26.25-3.03 1.08-.85.91-1.1 2.27-.63 3.44.43 1.12 1.53 1.87 2.73 1.89 1.34.05 2.58-.78 3-2.03.16-.48.23-.98.22-1.48l.02-14.28z"/></svg>
         TikTok
       </a>
-      <!-- X (Twitter) -->
       <a href="https://x.com/metro_finans" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
         X (Twitter)
@@ -1122,7 +1051,7 @@
 
     <div class="footer-links">
       <a href="https://finansmetro.se/" target="_blank" rel="noopener">Hemsida</a>
-      <a href="https://www.patreon.com/cw/u81441044" target="_blank" rel="noopener">Patreon</a>
+      <a href="https://patreon.com/u81441044"rel="noopener">Patreon</a>
       <a href="#signals-section">Signaler</a>
       <a href="#membership">Medlemskap</a>
     </div>
@@ -1133,63 +1062,64 @@
     <p class="footer-copy">© 2026 Metro Finans. Alla rättigheter förbehållna.</p>
   </footer>
 
-  <!-- Toggleskriptet för att byta priser dynamiskt -->
-  <script>
-    function togglePricing() {
-      const isYearly = document.getElementById('period-toggle').checked;
-      
-      const labelMonthly = document.getElementById('label-monthly');
-      const labelYearly = document.getElementById('label-yearly');
-      
-      // Hämta priselementen
-      const priceDeluxe = document.getElementById('price-deluxe-val');
-      const pricePremium = document.getElementById('price-premium-val');
-      const priceAktieskolan = document.getElementById('price-aktieskolan-val');
-      
-      // Hämta text-suffix (/mån eller /år)
-      const textDeluxe = document.getElementById('period-deluxe-text');
-      const textPremium = document.getElementById('period-premium-text');
-      const textAktieskolan = document.getElementById('period-aktieskolan-text');
-      
-      // Hämta gamla strukna priser-containrar och spara-badges
-      const oldPrices = document.querySelectorAll('.price-old-wrapper');
-      const saveBadges = document.querySelectorAll('.plan-save-badge');
-
-      if (isYearly) {
-        labelMonthly.classList.remove('active');
-        labelYearly.classList.add('active');
-        
-        // Sätt de nya nedsatta priserna för årsbasis
-        priceDeluxe.textContent = '10.92';
-        pricePremium.textContent = '13.20';
-        priceAktieskolan.textContent = '31.85';
-        
-        textDeluxe.textContent = '/mån (faktureras årligen)';
-        textPremium.textContent = '/mån (faktureras årligen)';
-        textAktieskolan.textContent = '/mån (faktureras årligen)';
-        
-        // Visa gamla priserna och spar-taggarna
-        oldPrices.forEach(el => el.style.display = 'block');
-        saveBadges.forEach(el => el.style.display = 'block');
-      } else {
-        labelMonthly.add('active');
-        labelYearly.classList.remove('active');
-        
-        // Sätt tillbaka till ordinarie månadskostnad
-        priceDeluxe.textContent = '24';
-        pricePremium.textContent = '29';
-        priceAktieskolan.textContent = '70';
-        
-        textDeluxe.textContent = '/mån';
-        textPremium.textContent = '/mån';
-        textAktieskolan.textContent = '/mån';
-        
-        // Dölj gamla priser och spar-taggarna
-        oldPrices.forEach(el => el.style.display = 'none');
-        saveBadges.forEach(el => el.style.display = 'none');
-      }
-    }
-  </script>
   <script src="main.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const toggleBtn = document.getElementById("pricing-toggle");
+      const labelMonthly = document.getElementById("label-monthly");
+      const labelYearly = document.getElementById("label-yearly");
+      const plans = document.querySelectorAll(".plan");
+
+      // Skapa en stabil state-variabel
+      let isYearly = false;
+
+      function updatePricing() {
+        // 1. Slå på/av CSS-klassen för knappen och text-etiketterna
+        if (isYearly) {
+          toggleBtn.classList.add("yearly");
+          labelYearly.classList.add("active");
+          labelMonthly.classList.remove("active");
+        } else {
+          toggleBtn.classList.remove("yearly");
+          labelYearly.classList.remove("active");
+          labelMonthly.classList.add("active");
+        }
+
+        // 2. Loopa igenom varje kort och uppdatera pris och texten efter snedstrecket
+        plans.forEach(plan => {
+          const priceNumEl = plan.querySelector(".price-num");
+          const priceMoEl = plan.querySelector(".price-mo");
+          
+          if (isYearly) {
+            const yearlyPrice = plan.getAttribute("data-yearly");
+            priceNumEl.textContent = yearlyPrice;
+            priceMoEl.textContent = "/år";
+          } else {
+            const monthlyPrice = plan.getAttribute("data-monthly");
+            priceNumEl.textContent = monthlyPrice;
+            priceMoEl.textContent = "/mån";
+          }
+        });
+      }
+
+      // Klickhändelse på själva knappen (Växlar fram och tillbaka varje gång)
+      toggleBtn.addEventListener("click", () => {
+        isYearly = !isYearly;
+        updatePricing();
+      });
+
+      // Gör det också möjligt att klicka direkt på texterna "Månadsvis" eller "Årsvis"
+      labelMonthly.addEventListener("click", () => {
+        isYearly = false;
+        updatePricing();
+      });
+
+      labelYearly.addEventListener("click", () => {
+        isYearly = true;
+        updatePricing();
+      });
+    });
+  </script>
 </body>
 </html>
