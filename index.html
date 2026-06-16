@@ -563,15 +563,29 @@
       line-height: 1.55;
     }
 
-    .plan-price { margin-bottom: 28px; min-height: 44px; display: flex; align-items: baseline; }
+    /* Ny prishållare: Byter till kolumn-layout för att lägga gamla priset ÖVER det nya */
+    .plan-price { 
+      margin-bottom: 28px; 
+      min-height: 74px; /* Fast höjd så inget rör på sig */
+      display: flex; 
+      flex-direction: column-reverse; /* Det gamla priset placeras ovanför det nya */
+      justify-content: flex-end;
+    }
+
+    .price-row-current {
+      display: flex;
+      align-items: baseline;
+      margin-top: 2px;
+    }
 
     .price-old {
       font-family: 'Instrument Serif', serif;
-      font-size: 24px;
+      font-size: 18px;
       color: var(--muted);
       text-decoration: line-through;
-      margin-right: 8px;
-      display: none; /* visas bara vid årlig fakturering */
+      line-height: 1;
+      height: 20px; /* Tar upp plats även när den är osynlig */
+      visibility: hidden; /* Döljer men bevarar utrymmet så layouten står helt stilla */
     }
 
     .price-num {
@@ -967,10 +981,12 @@
           <div class="plan-name">Deluxe</div>
           <p class="plan-tagline">För dig som vill följa mina marknadsanalyser utan signaler, targets eller personlig hjälp.</p>
           <div class="plan-price">
-            <span class="price-cur">$</span>
-            <span class="price-old" id="old-deluxe">16.80</span>
-            <span class="price-num" id="price-deluxe">24</span>
-            <span class="price-mo" id="period-deluxe">/mån</span>
+            <span class="price-old" id="old-deluxe">$16.80</span>
+            <div class="price-row-current">
+              <span class="price-cur">$</span>
+              <span class="price-num" id="price-deluxe">24</span>
+              <span class="price-mo" id="period-deluxe">/mån</span>
+            </div>
           </div>
           <ul class="plan-perks">
             <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Veckovisa marknadsanalyser</li>
@@ -987,10 +1003,12 @@
           <div class="plan-name">Premium</div>
           <p class="plan-tagline">För dig som vill ha mina marknadsanalyser, tekniska nivåer, targets och löpande marknadsidéer.</p>
           <div class="plan-price">
-            <span class="price-cur">$</span>
-            <span class="price-old" id="old-premium">20.30</span>
-            <span class="price-num" id="price-premium">29</span>
-            <span class="price-mo" id="period-premium">/mån</span>
+            <span class="price-old" id="old-premium">$20.30</span>
+            <div class="price-row-current">
+              <span class="price-cur">$</span>
+              <span class="price-num" id="price-premium">29</span>
+              <span class="price-mo" id="period-premium">/mån</span>
+            </div>
           </div>
           <ul class="plan-perks">
             <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Allt som ingår i Deluxe</li>
@@ -1010,10 +1028,12 @@
           <div class="plan-name">AKTIESKOLAN - Utbildning</div>
           <p class="plan-tagline">För dig som vill lära dig grunderna bakom analysen och förstå hur jag tänker kring marknaden.</p>
           <div class="plan-price">
-            <span class="price-cur">$</span>
-            <span class="price-old" id="old-aktieskolan">49</span>
-            <span class="price-num" id="price-aktieskolan">70</span>
-            <span class="price-mo" id="period-aktieskolan">/mån</span>
+            <span class="price-old" id="old-aktieskolan">$49.00</span>
+            <div class="price-row-current">
+              <span class="price-cur">$</span>
+              <span class="price-num" id="price-aktieskolan">70</span>
+              <span class="price-mo" id="period-aktieskolan">/mån</span>
+            </div>
           </div>
           <ul class="plan-perks">
             <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Allt som ingår i Premium</li>
@@ -1095,10 +1115,10 @@
           const baseYearly = plan.dom.getAttribute('data-yearly-base');
           const saleYearly = plan.dom.getAttribute('data-yearly-sale');
           
-          // Visa den gamla överstrukna siffran
+          // Gör det gamla priset synligt ovanför
           const oldEl = document.getElementById(plan.idOld);
-          oldEl.textContent = baseYearly;
-          oldEl.style.display = 'inline-block';
+          oldEl.textContent = '$' + baseYearly;
+          oldEl.style.visibility = 'visible';
           
           // Sätt det nya rabatterade priset
           document.getElementById(plan.idPrice).textContent = saleYearly;
@@ -1112,8 +1132,8 @@
         plans.forEach(plan => {
           const monthlyPrice = plan.dom.getAttribute('data-monthly-price');
           
-          // Dölj överstruket pris
-          document.getElementById(plan.idOld).style.display = 'none';
+          // Gör det gamla priset osynligt men bevara utrymmet (håller layouten stilla)
+          document.getElementById(plan.idOld).style.visibility = 'hidden';
           
           // Sätt tillbaka standard månadspris
           document.getElementById(plan.idPrice).textContent = monthlyPrice;
